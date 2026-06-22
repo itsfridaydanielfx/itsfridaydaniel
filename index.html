@@ -130,6 +130,52 @@ h1 .grad{ background:linear-gradient(110deg,var(--violet),var(--magenta) 60%,var
 .app-tile:hover .cta .arrow{ transform:translateX(5px); }
 .body p{ margin-bottom:18px; }
 
+/* status: POLECANE / NOWE */
+.title-row{ display:flex;align-items:center;gap:9px;flex-wrap:wrap; }
+.status{ font-size:9.5px;font-weight:800;letter-spacing:.08em;padding:4px 9px;border-radius:999px;white-space:nowrap; }
+.status.polecane{ color:#231603;background:linear-gradient(135deg,#ffe08a,#ffb24d); }
+.status.nowe{ color:#04160e;background:linear-gradient(135deg,#73f3b8,#34d399); }
+
+/* SOON (niedziałające jeszcze) */
+.app-tile.soon{ cursor:default; }
+.app-tile.soon:hover{ transform:none;box-shadow:none;border-color:var(--border);background:var(--card); }
+.app-tile.soon .mock{ filter:blur(5px);opacity:.45; }
+.app-tile.soon .body h3{ opacity:.9; }
+.soon-overlay{ position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4; }
+.soon-badge{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:.28em;color:#fff;
+  border:1px solid var(--border-hover);background:rgba(8,7,14,.5);backdrop-filter:blur(2px);
+  padding:9px 20px;border-radius:999px;box-shadow:0 12px 32px -12px #000;
+}
+.cta.disabled{ background:rgba(255,255,255,.03);border-color:var(--border);color:var(--muted-2);cursor:default; }
+
+/* mockup: Wtyczka YT */
+.yt{ padding:16px; }
+.yt-player{ height:96px;border-radius:11px;background:linear-gradient(180deg,#2a0d12,#140a0f);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:13px; }
+.yt-play{ width:0;height:0;border-style:solid;border-width:11px 0 11px 19px;border-color:transparent transparent transparent #ff3b3b;filter:drop-shadow(0 0 12px rgba(255,59,59,.6));margin-left:4px; }
+.yt-meta{ display:flex;align-items:center;gap:11px; }
+.yt-dot{ width:30px;height:30px;border-radius:50%;background:var(--panel-2); }
+.yt-lines{ flex:1; }
+.yt-lines span{ display:block;height:7px;border-radius:5px;background:rgba(255,255,255,.1);margin-bottom:6px; }
+.yt-lines span.s{ width:55%; }
+.yt-dl{ width:28px;height:28px;border-radius:8px;background:rgba(255,59,59,.16);border:1px solid rgba(255,59,59,.4);color:#ff8a8a;display:flex;align-items:center;justify-content:center;font-size:14px; }
+
+/* POPUP licencji */
+.modal-backdrop{ position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(4,3,8,.74);backdrop-filter:blur(7px); }
+.modal-backdrop.open{ display:flex; }
+.modal{ position:relative;max-width:410px;width:100%;background:var(--panel);border:1px solid var(--border-hover);border-radius:22px;padding:32px 26px 26px;text-align:center;box-shadow:0 50px 120px -30px #000; }
+.modal-x{ position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);font-size:12px;cursor:pointer;transition:color .2s,background .2s; }
+.modal-x:hover{ color:#fff;background:rgba(255,255,255,.08); }
+.m-ico{ width:56px;height:56px;border-radius:17px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,#feda75,#fa7e1e 28%,#d62976 62%,#962fbf 92%);box-shadow:0 0 32px rgba(214,41,118,.5); }
+.m-ico svg{ width:28px;height:28px; }
+.modal h4{ font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:21px;margin-bottom:10px; }
+.modal p{ color:var(--muted);font-size:14px;margin-bottom:18px; }
+.m-btn{ display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:13px;border-radius:13px;text-decoration:none;font-weight:600;font-size:14.5px;color:#fff;margin-top:10px;transition:transform .2s,background .2s; }
+.m-btn:hover{ transform:translateY(-2px); }
+.m-btn.primary{ background:linear-gradient(135deg,var(--violet),var(--magenta)); }
+.m-btn.ig{ background:rgba(255,255,255,.05);border:1px solid var(--border-hover); }
+.m-btn svg{ width:18px;height:18px; }
+
 /* ---------- MOCKUP: panel bazowy ---------- */
 .mock{
   width:100%;max-width:300px;background:var(--panel);border:1px solid var(--border);border-radius:15px;
@@ -195,10 +241,7 @@ h1 .grad{ background:linear-gradient(110deg,var(--violet),var(--magenta) 60%,var
 .copyright{ text-align:center;color:var(--muted-2);font-size:12.5px;padding-bottom:46px; }
 
 /* =================== RESPONSIVE =================== */
-@media (max-width:880px){
-  .apps{ grid-template-columns:1fr;max-width:420px;margin:0 auto; }
-  .nav-social{ display:none; }
-}
+@media (max-width:880px){ .apps{ grid-template-columns:1fr;max-width:420px;margin:0 auto; } }
 </style>
 </head>
 <body>
@@ -218,6 +261,18 @@ h1 .grad{ background:linear-gradient(110deg,var(--violet),var(--magenta) 60%,var
   <div class="copyright">© <span id="year"></span> itsfridaydaniel</div>
 </div>
 
+<!-- ============ POPUP: licencja po zakupie ============ -->
+<div class="modal-backdrop" id="licenseModal">
+  <div class="modal">
+    <button class="modal-x" id="modalClose" aria-label="Zamknij">✕</button>
+    <div class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></div>
+    <h4>Po zakupie — licencja</h4>
+    <p>Kup rozszerzenie w sklepie, a potem napisz do mnie na Instagramie po klucz licencyjny. Wysyłam licencje ręcznie 🔑</p>
+    <a class="m-btn primary" href="https://insy.io/p/friday-downloader" target="_blank" rel="noopener">Przejdź do sklepu →</a>
+    <a class="m-btn ig" href="https://www.instagram.com/itsfridaydaniel/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg> Napisz po licencję na IG</a>
+  </div>
+</div>
+
 <script>
 /* =========================================================
    👇 TU EDYTUJESZ 👇
@@ -229,7 +284,8 @@ const SOCIALS = {
   discord:"https://www.dsc.gg/clubfriday"
 };
 
-// 3 aplikacje. href = link po kliknięciu kafelka.
+// status: "polecane" | "nowe" | "soon" (soon = zablurowany + SOON, link nieaktywny)
+// popup:true -> przed sklepem pokazuje okienko o licencji na IG
 const APPS = [
   {
     title:"Friday TYPE BEAT Downloader",
@@ -238,7 +294,9 @@ const APPS = [
     cta:"Pobierz rozszerzenie",
     href:"https://insy.io/p/friday-downloader",
     accent:"red",
-    art:"downloader"
+    art:"downloader",
+    status:"soon",
+    popup:true
   },
   {
     title:"True BPM",
@@ -247,7 +305,8 @@ const APPS = [
     cta:"Pobierz wtyczkę",
     href:"https://github.com/itsfridaydanielfx/fridaybpm",
     accent:"peri",
-    art:"bpm"
+    art:"bpm",
+    status:"soon"
   },
   {
     title:"Jaki to type beat?",
@@ -300,29 +359,58 @@ function art(type){
       <div class="tb-chips"><span>Don Toliver</span><span>Trippie Redd</span><span>Kabe</span><span>Oki</span><span>Ken Carson</span></div>
       <div class="tb-input"><span class="txt">Wklej link, artystę, numer albo opis brzmienia…</span><span class="tb-send">↑</span></div>
     </div>`;
+  if(type==='yt') return `
+    <div class="mock yt">
+      <div class="yt-player"><span class="yt-play"></span></div>
+      <div class="yt-meta"><span class="yt-dot"></span><div class="yt-lines"><span></span><span class="s"></span></div><span class="yt-dl">↓</span></div>
+    </div>`;
   return '';
 }
 
 // kafelki
-document.getElementById('apps').innerHTML = APPS.map(a=>`
-  <a class="app-tile" data-accent="${a.accent}" href="${a.href}"${ext(a.href)}>
+const statusPill = s =>
+  s==='polecane' ? '<span class="status polecane">POLECANE</span>' :
+  s==='nowe'     ? '<span class="status nowe">NOWE</span>' : '';
+
+document.getElementById('apps').innerHTML = APPS.map(a=>{
+  const soon = a.status==='soon';
+  const tag  = soon ? 'div' : 'a';
+  const hrefAttr = soon ? '' : ` href="${a.href}"${ext(a.href)}`;
+  const popupAttr = (a.popup && !soon) ? ' data-popup="1"' : '';
+  const overlay = soon ? '<div class="soon-overlay"><span class="soon-badge">SOON</span></div>' : '';
+  const cta = soon
+    ? '<span class="cta disabled">Wkrótce</span>'
+    : `<span class="cta">${a.cta} <span class="arrow">→</span></span>`;
+  return `<${tag} class="app-tile${soon?' soon':''}" data-accent="${a.accent}"${hrefAttr}${popupAttr}>
     <span class="glow"></span>
     <div class="stage">
       ${art(a.art)}
+      ${overlay}
     </div>
     <div class="body">
       <span class="kicker">${a.badge}</span>
-      <h3>${a.title}</h3>
+      <div class="title-row"><h3>${a.title}</h3>${statusPill(a.status)}</div>
       <p>${a.desc}</p>
-      <span class="cta">${a.cta} <span class="arrow">→</span></span>
+      ${cta}
     </div>
-  </a>`).join('');
+  </${tag}>`;
+}).join('');
 
 // footer sociale (pigułki)
 document.getElementById('foot').innerHTML = `
   <a class="soc-pill" data-net="discord" href="${SOCIALS.discord}" target="_blank" rel="noopener">${ICONS.discord} Club Friday</a>
   <a class="soc-pill" data-net="instagram" href="${SOCIALS.instagram}" target="_blank" rel="noopener">${ICONS.instagram} @itsfridaydaniel</a>
   <a class="soc-pill" data-net="tiktok" href="${SOCIALS.tiktok}" target="_blank" rel="noopener">${ICONS.tiktok} TikTok</a>`;
+
+// popup o licencji (downloader) — przechwytuje klik i pokazuje okienko
+const licenseModal = document.getElementById('licenseModal');
+const closeModal = () => licenseModal.classList.remove('open');
+document.querySelectorAll('[data-popup]').forEach(el=>{
+  el.addEventListener('click', e=>{ e.preventDefault(); licenseModal.classList.add('open'); });
+});
+licenseModal.addEventListener('click', e=>{ if(e.target===licenseModal) closeModal(); });
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
